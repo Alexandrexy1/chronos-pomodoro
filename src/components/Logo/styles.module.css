@@ -3,6 +3,7 @@
     align-items: center;
     justify-content: center;
     gap: 2.4rem;
+    padding-top: 2.8rem;
     
 }
 
@@ -18,11 +19,13 @@
     gap: .5rem;
 }
 
+.logoLink:hover {
+    filter: brightness(70%);
+    transition: all 0.2s ease-in-out;
+
+}
+
 .logoLink svg {
     width: 6.4rem;
     height: 6.4rem;
-}
-
-.logoLink:hover {
-    color: var(--link-color-hover);
 }
