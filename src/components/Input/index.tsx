@@ -1,17 +1,20 @@
-import { HTMLInputTypeAttribute } from "react";
+import { HTMLInputTypeAttribute, InputHTMLAttributes } from "react";
 
-interface InputPropsInterface {
+import styles from "./styles.module.css";
+
+interface InputPropsInterface extends InputHTMLAttributes<HTMLInputElement> {
     type: HTMLInputTypeAttribute;
+    labelText?: string;
     id: string;
 
 }
 
 
-export function Input({ type, id }: InputPropsInterface) {
+export function Input({ type, id, labelText, ...rest }: InputPropsInterface) {
     return (
         <>
-            <label htmlFor={ id }>task</label>
-            <input id={ id } type={ type } />
+            { labelText && <label htmlFor={ id }>{ labelText }</label> }
+            <input className={ styles.input } id={ id } type={ type } { ...rest } />
         </>
     )
 }

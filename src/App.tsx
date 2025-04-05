@@ -23,7 +23,7 @@ export function App() {
             <Container>
                 <form action="" className="form">
                     <div className="formRow">
-                        <Input type="text" id="myInput"/>
+                        <Input type="text" id="myInput" placeholder="Defina um horário" />
                     </div>
                     <div className="formRow">
                         <p>Lorem ipsum dolor sit amet.</p>
