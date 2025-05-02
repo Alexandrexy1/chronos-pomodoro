@@ -2,7 +2,7 @@ import { Container } from "./components/Container";
 import { CountDown } from "./components/CountDown";
 import { Menu } from "./components/Menu";
 import { Logo } from "./components/Logo";
-import { Footer } from "./components/footer";
+import { Footer } from "./components/Footer";
 import { Input } from "./components/Input";
 import { Cycles } from "./components/Cycles";
 import { Button } from "./components/Button";
