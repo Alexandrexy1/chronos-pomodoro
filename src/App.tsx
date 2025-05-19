@@ -1,9 +1,11 @@
-import { NotFound } from "./components/NotFound";
+import { TaskContextProvider } from "./contexts/TaskContext";
 import { Home } from "./pages/Home";
 
 import "./styles/global.css";
 import "./styles/theme.css";
 
 export function App() {
-    return <NotFound/>
+    return <TaskContextProvider>
+        <Home />
+    </TaskContextProvider>
 }
