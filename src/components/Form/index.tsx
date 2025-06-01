@@ -6,10 +6,16 @@ import { PlayCircleIcon, StopCircleIcon } from "lucide-react";
 import { FormEvent, useRef } from "react";
 import { TaskModel } from "../../models/TaskModel";
 import { useTaskContext } from "../../contexts/TaskContext/useTaskContext";
+import { getNextCycle } from "../../utils/getNextCycle";
+import { getNextCycleType } from "../../utils/getNextCycleType";
+import { formatSecondsToMinutes } from "../../utils/FormatSecondsToMinutes";
 
 export function Form() {
-    const { setState } = useTaskContext();
+    const { state, setState } = useTaskContext();
     const taskNameInput = useRef<HTMLInputElement>(null) as React.RefObject<HTMLInputElement>;
+    
+    const nextCycle = getNextCycle(state.currentCycle);
+    const nextCycleType = getNextCycleType(nextCycle);
 
     function handleStartNewTask(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
@@ -29,8 +35,8 @@ export function Form() {
             startDate: Date.now(),
             endDate: null,
             interruptDate: null,
-            durationInMinutes: 1,
-            type: "workTime"
+            durationInMinutes: state.config[nextCycleType],
+            type: nextCycleType,
         }
 
         const secondsRemaining = newTask.durationInMinutes * 60;
@@ -39,9 +45,9 @@ export function Form() {
             return {
                 ...prevState,
                 activeTask: newTask,
-                currentCycle: 1,
+                currentCycle: nextCycle,
                 secondsRemaining,
-                formattedSecondsRemaing: "00:00",
+                formattedSecondsRemaing: formatSecondsToMinutes(secondsRemaining),
                 tasks: [...prevState.tasks, newTask],
             }
         })
