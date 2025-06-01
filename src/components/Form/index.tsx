@@ -8,7 +8,7 @@ import { TaskModel } from "../../models/TaskModel";
 import { useTaskContext } from "../../contexts/TaskContext/useTaskContext";
 import { getNextCycle } from "../../utils/getNextCycle";
 import { getNextCycleType } from "../../utils/getNextCycleType";
-import { formatSecondsToMinutes } from "../../utils/FormatSecondsToMinutes";
+import { formatSecondsToMinutes } from "../../utils/formatSecondsToMinutes";
 
 export function Form() {
     const { state, setState } = useTaskContext();
