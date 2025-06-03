@@ -53,6 +53,23 @@ export function Form() {
         })
     }
 
+    function handleInterruptTask() {
+        setState(prevState => {
+            return {
+                ...prevState,
+                activeTask: null,
+                secondsRemaining: 0,
+                formattedSecondsRemaing: "00:00",
+                tasks: prevState.tasks.map(task => {
+                    if (prevState.activeTask && prevState.activeTask.id === task.id) {
+                        return {...task, interruptDate: Date.now()}
+                    }
+                    return task;
+                })
+            }
+        })
+    }
+
     return (
         <form onSubmit={handleStartNewTask} action="" className="form">
             <div className="formRow">
@@ -61,15 +78,37 @@ export function Form() {
                     id="myInput" 
                     placeholder="Defina um horário"
                     ref={taskNameInput}
+                    disabled={state.activeTask?.type === "workTime" ? true : false}
                 />
             </div>
             <div className="formRow">
                 <p>Lorem ipsum dolor sit amet.</p>
             </div>
-            <Cycles/>
+            {
+                state.currentCycle > 0 && (
+                    <div className="formRow">
+                        <Cycles/>
+                    </div>
+                )
+            }
             <div className="formRow">
-                <Button icon={<PlayCircleIcon />} />
-                <Button icon={<StopCircleIcon />} color="red" />
+                { !state.activeTask && (
+                    <Button 
+                        icon={<PlayCircleIcon />} 
+                        type="submit"
+                    /> 
+                )
+                }
+
+                { state.activeTask && (
+                    <Button 
+                        icon={<StopCircleIcon />} 
+                        color="red"
+                        type="button"
+                        onClick={handleInterruptTask} 
+                    />
+                )
+                }
             </div>
         </form>
     )
