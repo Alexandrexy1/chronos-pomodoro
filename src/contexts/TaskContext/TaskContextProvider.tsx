@@ -14,12 +14,16 @@ export function TaskContextProvider({ children }: PropsWithChildren) {
         const countDownSeconds = e.data;
         console.log(countDownSeconds);
 
-        dispatch({
-            type: TaskActionTypes.COUNT_DOWN,
-            payload: { secondsRemaining: countDownSeconds }
-        })
         if (countDownSeconds <= 0) {
+            dispatch({
+                type: TaskActionTypes.COMPLETE_TASK,
+            })
             worker.terminate();
+        } else {
+            dispatch({
+                type: TaskActionTypes.COUNT_DOWN,
+                payload: { secondsRemaining: countDownSeconds }
+            })
         }
     });
 
