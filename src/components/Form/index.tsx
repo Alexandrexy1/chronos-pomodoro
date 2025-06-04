@@ -8,12 +8,13 @@ import { TaskModel } from "../../models/TaskModel";
 import { useTaskContext } from "../../contexts/TaskContext/useTaskContext";
 import { getNextCycle } from "../../utils/getNextCycle";
 import { getNextCycleType } from "../../utils/getNextCycleType";
-import { formatSecondsToMinutes } from "../../utils/formatSecondsToMinutes";
+import { TaskActionTypes } from "../../contexts/TaskContext/taskActions";
+import { Tips } from "../Tips";
+import { TimeWorkerManager } from "../../workers/TimeWorkerManager";
 
 export function Form() {
-    const { state, setState } = useTaskContext();
+    const { state, dispatch } = useTaskContext();
     const taskNameInput = useRef<HTMLInputElement>(null) as React.RefObject<HTMLInputElement>;
-    
     const nextCycle = getNextCycle(state.currentCycle);
     const nextCycleType = getNextCycleType(nextCycle);
 
@@ -39,35 +40,16 @@ export function Form() {
             type: nextCycleType,
         }
 
-        const secondsRemaining = newTask.durationInMinutes * 60;
+        dispatch({ type: TaskActionTypes.START_TASK, payload: newTask });
 
-        setState(prevState => {
-            return {
-                ...prevState,
-                activeTask: newTask,
-                currentCycle: nextCycle,
-                secondsRemaining,
-                formattedSecondsRemaing: formatSecondsToMinutes(secondsRemaining),
-                tasks: [...prevState.tasks, newTask],
-            }
+        const worker = TimeWorkerManager.getInstance();
+        worker.onmessage(event => {
+            console.log("Pegando na principal: " + event.data);
         })
     }
 
     function handleInterruptTask() {
-        setState(prevState => {
-            return {
-                ...prevState,
-                activeTask: null,
-                secondsRemaining: 0,
-                formattedSecondsRemaing: "00:00",
-                tasks: prevState.tasks.map(task => {
-                    if (prevState.activeTask && prevState.activeTask.id === task.id) {
-                        return {...task, interruptDate: Date.now()}
-                    }
-                    return task;
-                })
-            }
-        })
+        dispatch({ type: TaskActionTypes.INTERRUPT_TASK});
     }
 
     return (
@@ -76,13 +58,13 @@ export function Form() {
                 <Input 
                     type="text" 
                     id="myInput" 
-                    placeholder="Defina um horário"
+                    placeholder="Defina um nome"
                     ref={taskNameInput}
                     disabled={state.activeTask?.type === "workTime" ? true : false}
                 />
             </div>
             <div className="formRow">
-                <p>Lorem ipsum dolor sit amet.</p>
+                <Tips/>
             </div>
             {
                 state.currentCycle > 0 && (

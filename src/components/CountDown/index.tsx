@@ -6,7 +6,7 @@ export function CountDown() {
     
     return (
         <div className={ styles.countDown }>
-            { state.formattedSecondsRemaing }
+            { state.formattedSecondsRemaining }
         </div>
     )
 }

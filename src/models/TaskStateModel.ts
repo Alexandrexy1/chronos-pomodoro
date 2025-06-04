@@ -3,7 +3,7 @@ import { TaskModel } from "./TaskModel"
 export interface TaskStateModel {
     tasks: TaskModel[];
     secondsRemaining: number;
-    formattedSecondsRemaing: string;
+    formattedSecondsRemaining: string;
     activeTask: TaskModel | null;
     currentCycle: number;
     config: {
