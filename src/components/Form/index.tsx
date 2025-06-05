@@ -10,7 +10,7 @@ import { getNextCycle } from "../../utils/getNextCycle";
 import { getNextCycleType } from "../../utils/getNextCycleType";
 import { TaskActionTypes } from "../../contexts/TaskContext/taskActions";
 import { Tips } from "../Tips";
-import { TimeWorkerManager } from "../../workers/TimeWorkerManager";
+import { toastifyWrapper } from "../../adapters/toastifyWrapper";
 
 export function Form() {
     const { state, dispatch } = useTaskContext();
@@ -20,13 +20,14 @@ export function Form() {
 
     function handleStartNewTask(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
+        toastifyWrapper.dismiss();
 
         if (taskNameInput.current === null) return;
 
         const taskName = taskNameInput.current.value.trim();
 
         if (!taskName) {
-            alert("nome da task vazia");
+            toastifyWrapper.warn("nome da task vazia");
             return;
         }
 
@@ -41,16 +42,13 @@ export function Form() {
         }
 
         dispatch({ type: TaskActionTypes.START_TASK, payload: newTask });
-
-        const worker = TimeWorkerManager.getInstance();
-        worker.onmessage(event => {
-            console.log("Pegando na principal: " + event.data);
-        })
+        toastifyWrapper.success("Tarefa iniciada");
     }
 
     function handleInterruptTask() {
         dispatch({ type: TaskActionTypes.INTERRUPT_TASK});
-    }
+        toastifyWrapper.error("Tarefa interrompida");
+        }
 
     return (
         <form onSubmit={handleStartNewTask} action="" className="form">
