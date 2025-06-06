@@ -15,6 +15,8 @@ import { toastifyWrapper } from "../../adapters/toastifyWrapper";
 export function Form() {
     const { state, dispatch } = useTaskContext();
     const taskNameInput = useRef<HTMLInputElement>(null) as React.RefObject<HTMLInputElement>;
+    const lastTaskName = state.tasks[state.tasks.length - 1]?.name || "";
+    
     const nextCycle = getNextCycle(state.currentCycle);
     const nextCycleType = getNextCycleType(nextCycle);
 
@@ -59,6 +61,7 @@ export function Form() {
                     placeholder="Defina um nome"
                     ref={taskNameInput}
                     disabled={state.activeTask?.type === "workTime" ? true : false}
+                    defaultValue={lastTaskName}
                 />
             </div>
             <div className="formRow">

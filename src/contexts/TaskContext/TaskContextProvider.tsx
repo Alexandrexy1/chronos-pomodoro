@@ -37,6 +37,9 @@ export function TaskContextProvider({ children }: PropsWithChildren) {
         if (!state.activeTask) {
             worker.terminate();      
         }
+
+        document.title = `${state.formattedSecondsRemaining} - Chronos Pomodoro`;
+
         worker.postMessage(state);
     }, [state, worker])
 
