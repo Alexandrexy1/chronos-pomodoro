@@ -6,6 +6,7 @@ export interface TaskModel {
     durationInMinutes: number;
     startDate: number;
     endDate: number | null;
+    completeDate: number | null;
     interruptDate: number | null;
     type: keyof TaskStateModel["config"];
     
