@@ -43,7 +43,7 @@ export function Menu() {
                 title="Ir para o Histórico">
                 <HistoryIcon/>
             </RouterLink>
-            <RouterLink href="#" className={ styles.menuLink } 
+            <RouterLink href="/settings/" className={ styles.menuLink } 
                 aria-label="Ir para as Configurações" 
                 title="Ir para as Configurações">
                 <SettingsIcon/>

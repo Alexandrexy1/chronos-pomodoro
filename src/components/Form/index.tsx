@@ -39,6 +39,7 @@ export function Form() {
             startDate: Date.now(),
             endDate: null,
             interruptDate: null,
+            completeDate: null,
             durationInMinutes: state.config[nextCycleType],
             type: nextCycleType,
         }

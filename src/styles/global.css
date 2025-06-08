@@ -16,7 +16,7 @@ body {
     color: var(--text-default);
 }
 
-.form {
+.form, .formRow {
     display: flex;
     align-items: center;
     justify-content: center;

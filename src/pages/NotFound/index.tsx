@@ -1,10 +1,14 @@
 import { MainTemplate } from "../../templates/MainTemplate";
-import { Container } from "../Container";
-import { GenericHtml } from "../GenericHtml";
-import { Heading } from "../Heading";
-import { RouterLink } from "../RouterLink";
+import { Container } from "../../components/Container";
+import { GenericHtml } from "../../components/GenericHtml";
+import { Heading } from "../../components/Heading";
+import { RouterLink } from "../../components/RouterLink";
+import { useEffect } from "react";
 
 export function NotFound() {
+    useEffect(() => {
+        document.title = 'Not Found - Chronos Pomodoro';
+    }, []);
     return(
         <MainTemplate>
             <Container>
